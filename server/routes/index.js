@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const asyncMiddleware = require('../utils/asyncMiddleware');
+const xmlToJson = require('../utils/xmlToJson');
 const SpotifyWebApi = require('spotify-web-api-node');
 
 const spotifyApi = new SpotifyWebApi({
@@ -8,11 +9,7 @@ const spotifyApi = new SpotifyWebApi({
   redirectUri : process.env.CALLBACK_URL
 });
 
-
-
-
-
-router.get('/auth', function(req,res){
+router.get('/auth', (req,res) => {
   const scopes = ['playlist-read-private', 'playlist-modify-private']
   const authorizeURL = spotifyApi.createAuthorizeURL(scopes, process.env.STATE);
   
@@ -29,8 +26,15 @@ router.get('/callback', asyncMiddleware(async (req,res) => {
 }));
 
 router.post('/kickoff', asyncMiddleware(async (req,res) => {
-  let data = await spotifyApi.getUserPlaylists();
-  res.json(data);
+  let uploadedPlaylist = req.files.playlist;
+  let playlistData = uploadedPlaylist.data.toString('utf8');
+
+  xmlToJson(playlistData, (err, playlistJSON) => {
+    if(err){
+      res.json({'confirmation': 'XML Parse failed'});
+    }
+    res.json(playlistJSON)
+  });
 }));
 
 module.exports = router;

@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
+const fileUpload = require('express-fileupload');
 const api = require('./routes');
 
 class App {
@@ -8,6 +9,7 @@ class App {
     this._server = express();  
     this._server.use(bodyParser.json());
     this._server.use(bodyParser.urlencoded({ extended: false }));
+    this._server.use(fileUpload());
     this._server.use('/api', require('./routes'));
   }
   listen(port) {
