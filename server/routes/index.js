@@ -31,9 +31,9 @@ router.post('/kickoff', asyncMiddleware(async (req,res) => {
 
   xmlToJson(playlistData, (err, playlistJSON) => {
     if(err){
-      res.json({'confirmation': 'XML Parse failed'});
+      res.send({'confirmation': 'XML Parse failed'});
     }
-    res.json(playlistJSON)
+    return res.send(playlistJSON)
   });
 }));
 
