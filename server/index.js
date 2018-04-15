@@ -6,7 +6,7 @@ const api = require('./routes');
 
 class App {
   constructor() {
-    this._server = express();  
+    this._server = express();
     this._server.use(bodyParser.json());
     this._server.use(bodyParser.urlencoded({ extended: false }));
     this._server.use(fileUpload());
