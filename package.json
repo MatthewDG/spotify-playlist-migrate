@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "start": "babel-watch index.js",
+    "lint": "eslint server",
+    "lint fix": "eslint --fix server"
   },
   "author": "",
   "license": "ISC",
@@ -16,12 +18,17 @@
     "express": "^4.16.2",
     "express-fileupload": "^0.4.0",
     "jest": "^22.1.4",
+    "kue": "^0.11.6",
     "lodash": "^4.17.4",
-    "oauth": "^0.9.15",
-    "passport-spotify": "^0.3.1",
     "spotify-web-api-node": "^2.5.0",
     "superagent": "^3.8.2",
     "supertest": "^3.0.0",
     "xml2js": "^0.4.19"
+  },
+  "devDependencies": {
+    "babel-watch": "^2.0.7",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.11.0"
   }
 }
