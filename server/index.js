@@ -2,7 +2,6 @@ require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const fileUpload = require('express-fileupload');
-const api = require('./routes');
 
 class App {
   constructor() {

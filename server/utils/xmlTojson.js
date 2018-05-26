@@ -1,6 +1,5 @@
 const xml2js = require('xml2js');
 const { reduce, includes } = require('lodash');
-const fs = require('fs');
 
 const parser = new xml2js.Parser();
 

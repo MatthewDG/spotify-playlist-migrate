@@ -1,10 +1,10 @@
 const router = require('express').Router();
+const kue = require('kue');
 const migratePlaylist = require('../services/migratePlaylist');
 const asyncMiddleware = require('../utils/asyncMiddleware');
 const xmlToJson = require('../utils/xmlToJson');
-const migrationQueue = require('../utils/migrationQueue');
 const SpotifyWebApi = require('spotify-web-api-node');
-
+const migrationQueue = process.env.REDISTOGO_URL ? kue.createQueue({ url: REDISTOGO_URL }) : kue.createQueue();
 const spotifyApi = new SpotifyWebApi({
   clientId: process.env.CLIENT_ID,
   clientSecret: process.env.CLIENT_SECRET,
@@ -35,6 +35,7 @@ router.post('/kickoff', asyncMiddleware(async (req, res) => {
     }
 
     migrationQueue.create('playlistMigration', { spotifyApi, playlistJSON })
+      .ttl(3600000)
       .removeOnComplete(true)
       .save((err) => {
         res.send({ playlistJSON });

@@ -17,7 +17,6 @@
     "dotenv": "^4.0.0",
     "express": "^4.16.2",
     "express-fileupload": "^0.4.0",
-    "jest": "^22.1.4",
     "kue": "^0.11.6",
     "lodash": "^4.17.4",
     "spotify-web-api-node": "^2.5.0",
@@ -29,6 +28,7 @@
     "babel-watch": "^2.0.7",
     "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^12.1.0",
+    "jest": "^22.1.4",
     "eslint-plugin-import": "^2.11.0"
   }
 }
