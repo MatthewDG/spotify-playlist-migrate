@@ -5,7 +5,7 @@ const asyncMiddleware = require('../utils/asyncMiddleware');
 const xmlToJson = require('../utils/xmlToJson');
 const SpotifyWebApi = require('spotify-web-api-node');
 const migrationQueue = process.env.REDISTOGO_URL ?
-kue.createQueue({ url: process.env.REDISTOGO_URL }) : kue.createQueue();
+kue.createQueue({ redis: process.env.REDISTOGO_URL }) : kue.createQueue();
 const spotifyApi = new SpotifyWebApi({
   clientId: process.env.CLIENT_ID,
   clientSecret: process.env.CLIENT_SECRET,
