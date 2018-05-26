@@ -2,7 +2,7 @@ const router = require('express').Router();
 const kue = require('kue');
 const migratePlaylist = require('../services/migratePlaylist');
 const asyncMiddleware = require('../utils/asyncMiddleware');
-const xmlToJson = require('../utils/xmlToJson');
+const xmlToJson = require('../utils/xmlTojson');
 const SpotifyWebApi = require('spotify-web-api-node');
 const migrationQueue = process.env.REDISTOGO_URL ?
 kue.createQueue({ redis: process.env.REDISTOGO_URL }) : kue.createQueue();
