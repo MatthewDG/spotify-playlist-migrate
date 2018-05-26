@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "babel-watch index.js",
+    "start": "NODE_ENV=development babel-watch index.js",
     "lint": "eslint server",
     "lint fix": "eslint --fix server"
   },
