@@ -1,6 +1,7 @@
-const xmlToJson = require('../../server/utils/xmlToJson');
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
+import xmlToJson from '../../src/server/utils/xmlTojson';
+
 let playlistData;
 
 describe('xmlToJson', () => {
@@ -10,7 +11,7 @@ describe('xmlToJson', () => {
       done();
     });
   })
-  
+
   test('converts XML file to JSON', done => {
     xmlToJson(playlistData, (err, playlistJSON) => {
       expect(err).toBe(null);

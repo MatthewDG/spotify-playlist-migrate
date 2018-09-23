@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "NODE_ENV=test jest __tests__ -i --forceExit",
     "dev": "NODE_ENV=development concurrently \"nodemon --exec babel-node src index.js\" \"nodemon --exec babel-node src/worker index.js\" ",
     "build": "babel src —-out-dir dist",
     "serve": "node dist/server",
@@ -33,6 +33,8 @@
     "@babel/core": "^7.1.0",
     "@babel/node": "^7.0.0",
     "@babel/preset-env": "^7.1.0",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-jest": "^23.6.0",
     "eslint": "^4.19.1",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-airbnb-base": "^12.1.0",
