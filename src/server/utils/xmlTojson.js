@@ -1,5 +1,5 @@
-const xml2js = require('xml2js');
-const { reduce, includes } = require('lodash');
+import xml2js from 'xml2js';
+import { reduce, includes } from 'lodash';
 
 const parser = new xml2js.Parser();
 

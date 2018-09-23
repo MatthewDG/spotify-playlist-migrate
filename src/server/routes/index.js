@@ -1,15 +1,23 @@
+import kue from 'kue';
+import SpotifyWebApi from 'spotify-web-api-node';
+import { get } from 'lodash'
+import asyncMiddleware from '../utils/asyncMiddleware';
+import xmlToJson from '../utils/xmlTojson';
+import { CLIENT_ID, CLIENT_SECRET, CALLBACK_URL } from '../../config/envVars';
+
 const router = require('express').Router();
-const kue = require('kue');
-const migratePlaylist = require('../services/migratePlaylist');
-const asyncMiddleware = require('../utils/asyncMiddleware');
-const xmlToJson = require('../utils/xmlTojson');
-const SpotifyWebApi = require('spotify-web-api-node');
+
 const migrationQueue = process.env.REDISTOGO_URL ?
-kue.createQueue({ redis: process.env.REDISTOGO_URL }) : kue.createQueue();
+  kue.createQueue({ redis: process.env.REDISTOGO_URL }) : kue.createQueue();
+
 const spotifyApi = new SpotifyWebApi({
-  clientId: process.env.CLIENT_ID,
-  clientSecret: process.env.CLIENT_SECRET,
-  redirectUri: process.env.CALLBACK_URL,
+  clientId: CLIENT_ID,
+  clientSecret: CLIENT_SECRET,
+  redirectUri: CALLBACK_URL,
+});
+
+router.get('/', (req, res) => {
+  res.send({});
 });
 
 router.get('/auth', (req, res) => {
@@ -27,7 +35,12 @@ router.get('/callback', asyncMiddleware(async (req, res) => {
 }));
 
 router.post('/kickoff', asyncMiddleware(async (req, res) => {
-  const uploadedPlaylist = req.files.playlist;
+  const uploadedPlaylist = get(req ,'files.playlist');
+
+  if(!uploadedPlaylist) {
+    res.send({ confirmation: 'FAIL' });
+  }
+
   const playlistData = uploadedPlaylist.data.toString('utf8');
 
   xmlToJson(playlistData, (err, playlistJSON) => {
@@ -38,7 +51,7 @@ router.post('/kickoff', asyncMiddleware(async (req, res) => {
     migrationQueue.create('playlistMigration', { spotifyApi, playlistJSON })
       .ttl(3600000)
       .removeOnComplete(true)
-      .save((err) => {
+      .save(() => {
         res.send({ playlistJSON });
       });
   });

@@ -5,15 +5,19 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "NODE_ENV=development babel-watch index.js",
-    "lint": "eslint server",
-    "lint fix": "eslint --fix server"
+    "dev": "NODE_ENV=development concurrently \"nodemon --exec babel-node src index.js\" \"nodemon --exec babel-node src/worker index.js\" ",
+    "build": "babel src —-out-dir dist",
+    "serve": "node dist/server",
+    "lint": "eslint src",
+    "lint:fix": "eslint --fix src"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "async": "^2.6.1",
+    "basic-auth": "^2.0.1",
     "body-parser": "^1.18.3",
+    "concurrently": "^4.0.1",
     "dotenv": "^4.0.0",
     "express": "^4.16.3",
     "express-fileupload": "^0.4.0",
@@ -25,10 +29,20 @@
     "xml2js": "^0.4.19"
   },
   "devDependencies": {
-    "babel-watch": "^2.0.7",
+    "@babel/cli": "^7.1.0",
+    "@babel/core": "^7.1.0",
+    "@babel/node": "^7.0.0",
+    "@babel/preset-env": "^7.1.0",
     "eslint": "^4.19.1",
+    "eslint-config-airbnb": "^17.1.0",
     "eslint-config-airbnb-base": "^12.1.0",
-    "eslint-plugin-import": "^2.12.0",
-    "jest": "^22.4.4"
+    "eslint-config-prettier": "^3.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.1",
+    "eslint-plugin-prettier": "^2.6.2",
+    "eslint-plugin-react": "^7.11.1",
+    "jest": "^22.4.4",
+    "nodemon": "^1.18.4",
+    "prettier": "^1.14.3"
   }
 }
